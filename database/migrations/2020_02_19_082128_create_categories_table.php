@@ -13,13 +13,15 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->index()->comment('名称');
-            $table->bigInteger('parent_id')->index()->default(0)->comment('父id');
-            $table->text('description')->nullable()->comment('描述');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('categories')){
+            Schema::create('categories', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->index()->comment('名称');
+                $table->bigInteger('parent_id')->index()->default(0)->comment('父id');
+                $table->text('description')->nullable()->comment('描述');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

@@ -25,6 +25,8 @@ class CreateProductsTable extends Migration
 
         Schema::table('products', function (Blueprint $table) {
             $table->string('description')->nullable()->after('img');
+            $table->integer('category_id')->unsigned()->index()->after('name');
+            $table->string('hash')->index()->after('name');
         });
 
         if (!Schema::hasTable('units')) {
@@ -47,44 +49,6 @@ class CreateProductsTable extends Migration
                 $table->timestamps();
             });
         }
-
-        $units = [
-            [
-                'name'        => '个',
-            ],
-            [
-                'name'        => '件',
-            ],
-            [
-                'name'        => '盒',
-            ],
-            [
-                'name'        => '箱',
-            ],
-            [
-                'name'        => '提',
-            ],
-            [
-                'name'        => '包',
-            ],
-            [
-                'name'        => '条',
-            ],
-            [
-                'name'        => '瓶',
-            ],
-            [
-                'name'        => '板',
-            ],
-            [
-                'name'        => '斤',
-            ],
-            [
-                'name'        => '公斤',
-            ],
-        ];
-
-        DB::table('categories')->insert($units);
     }
 
     /**

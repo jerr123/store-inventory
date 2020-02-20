@@ -25,7 +25,7 @@ class CreateSkusTable extends Migration
                 $table->decimal('cost_price', 15, 2)->nullable(); //成本价
                 $table->decimal('sell_price', 15, 2); //销售价格
                 $table->decimal('market_price', 15, 2)->nullable();   // 市场价
-                $table->text('remark');
+                $table->text('remark')->nullable();
                 $table->timestamps();
             });
         }

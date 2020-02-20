@@ -28,23 +28,30 @@ $api->version('v1', [
         // 小程序登录
         $api->post('weapp/authorizations', 'AuthorizationsController@weappStore')
             ->name('api.weapp.authorizations.store');
-        // 小程序注册
-        $api->post('weapp/users', 'UsersController@weappStore')
-            ->name('api.weapp.users.store');
         // 刷新token
         $api->put('authorizations/current', 'AuthorizationsController@update')
             ->name('api.authorizations.update');
         // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
-        $api->get('users/{user}', 'UsersController@show')
-            ->name('api.users.show');
 
         // 需要 token 的的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 当前登录用户信息
             $api->get('current-user', 'UsersController@me')
             ->name('api.user.show');
+
+            // 图片资源
+            $api->post('images', 'ImagesController@store')
+                ->name('api.images.store');
+
+            // 获取分类
+            $api->get('categories', 'CategoriesController@index')
+                ->name('api.categories.index');
+
+            // 获取单位
+            $api->get('units', 'UnitsController@index')
+                ->name('api.units.index');
 
             // 新增sku
             $api->post('skus', 'SkusController@store')

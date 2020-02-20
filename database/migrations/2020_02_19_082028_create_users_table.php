@@ -13,21 +13,23 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nick')->nullable();
-            $table->string('avatar')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('country')->nullable();
-            $table->string('province')->nullable();
-            $table->string('city')->nullable();
-            $table->string('weixin_openid')->unique()->nullable();
-            $table->string('weixin_unionid')->unique()->nullable();
-            $table->string('weapp_openid')->nullable()->unique();
-            $table->string('weixin_session_key')->nullable();
-            $table->timestamps();
-            $table->rememberToken();
-        });
+        if (!Schema::hasTable('users')){
+            Schema::create('users', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('nick')->nullable();
+                $table->string('avatar')->nullable();
+                $table->string('gender')->nullable();
+                $table->string('country')->nullable();
+                $table->string('province')->nullable();
+                $table->string('city')->nullable();
+                $table->string('weixin_openid')->unique()->nullable();
+                $table->string('weixin_unionid')->unique()->nullable();
+                $table->string('weapp_openid')->nullable()->unique();
+                $table->string('weixin_session_key')->nullable();
+                $table->timestamps();
+                $table->rememberToken();
+            });
+        }
     }
 
     /**
