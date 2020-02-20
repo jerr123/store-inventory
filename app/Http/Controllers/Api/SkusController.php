@@ -33,4 +33,18 @@ class SkusController extends Controller
         return $this->response->item($sku, new SkuTransformer())
             ->setStatusCode(201);
     }
+
+    public function barcodeSearch(SkuRequest $request) {
+        $barCode = $request->bar_code;
+        if (!$sku = Sku::where(['bar_code' => $barCode])->first()) {
+            return $this->response->error('未找到或不存在', 404);
+        }
+
+        return $this->response->item($sku, new SkuTransformer());
+    }
+
+    public function show(Sku $sku)
+    {
+        return $this->response->item($sku, new SkuTransformer());
+    }
 }
