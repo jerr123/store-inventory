@@ -34,8 +34,8 @@ class SkusController extends Controller
             ->setStatusCode(201);
     }
 
-    public function barcodeSearch(SkuRequest $request) {
-        $barCode = $request->bar_code;
+    public function barcodeSearch() {
+        $barCode = request('bar_code');
         if (!$sku = Sku::where(['bar_code' => $barCode])->first()) {
             return $this->response->error('未找到或不存在', 404);
         }
