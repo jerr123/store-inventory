@@ -14,11 +14,17 @@ class CreateProductsTable extends Migration
     public function up()
     {
         // spu
-        Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->index();
-            $table->string('img')->nullable();
-            $table->timestamps();
+        if (!Schema::hasTable('products')) {
+            Schema::create('products', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->index();
+                $table->string('img')->nullable();
+                $table->timestamps();
+            });
+        }
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('description')->nullable()->after('img');
         });
 
         if (!Schema::hasTable('units')) {
