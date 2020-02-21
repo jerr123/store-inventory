@@ -19,4 +19,20 @@ class Sku extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function scopeWithOrder($query, $order, $order_type = 'desc')
+    {
+        switch ($order) {
+            case 'price':
+                $query->orderBy('sell_price', $order_type);
+                break;
+
+            default:
+                $query->orderBy('created_at', $order_type);
+                break;
+        }
+        // 预加载防止 N+1 问题
+        return $query->with('product', 'unit');
+    }
+
 }

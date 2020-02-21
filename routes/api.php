@@ -25,6 +25,9 @@ $api->version('v1', [
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires'),
     ], function ($api) {
+        // 获取skus
+            $api->get('skus', 'SkusController@index')
+                ->name('api.skus.index');
         // 小程序登录
         $api->post('weapp/authorizations', 'AuthorizationsController@weappStore')
             ->name('api.weapp.authorizations.store');
@@ -56,9 +59,7 @@ $api->version('v1', [
             // 新增sku
             $api->post('skus', 'SkusController@store')
                 ->name('api.skus.store');
-            // 获取skus
-            $api->get('skus', 'SkusController@index')
-                ->name('api.skus.index');
+
             // 获取sku
             $api->get('skus/{sku}', 'SkusController@show')
                 ->name('api.skus.show');

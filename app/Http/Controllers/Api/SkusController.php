@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Sku;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Http\Requests\Api\SkuRequest;
 use App\Transformers\SkuTransformer;
 
@@ -46,5 +47,18 @@ class SkusController extends Controller
     public function show(Sku $sku)
     {
         return $this->response->item($sku, new SkuTransformer());
+    }
+
+    public function index(Request $request, Sku $sku)
+    {
+        $query = $sku->withOrder($request->order, $request->order_type?:'desc');
+
+        if ($categoryId = $request->category_id) {
+            $query->where('category_id', $categoryId);
+        }
+
+        $skus = $query->paginate($request->pageSize?:20);
+
+        return $this->response->paginator($skus, new SkuTransformer());
     }
 }
