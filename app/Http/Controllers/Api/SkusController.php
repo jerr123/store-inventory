@@ -98,6 +98,12 @@ class SkusController extends Controller
         if (!$s = Sku::where(['sku_hash'=>$skuHash])->first()) {
             $sku->sku_hash = $skuHash;
             $sku->save();
+        } else {
+            if ($s->id !== $sku->id) {
+                return $this->response->error('已经存在该sku', 400);
+            } else {
+                $sku->save();
+            }
         }
         return $this->response->item($sku, new SkuTransformer());
     }
