@@ -56,6 +56,9 @@ $api->version('v1', [
             // 获取分类
             $api->get('categories', 'CategoriesController@index')
                 ->name('api.categories.index');
+            // 创建分类
+            $api->post('categories', 'CategoriesController@store')
+                ->name('api.categories.store');
 
             // 获取单位
             $api->get('units', 'UnitsController@index')
@@ -64,6 +67,9 @@ $api->version('v1', [
             // 新增sku
             $api->post('skus', 'SkusController@store')
                 ->name('api.skus.store');
+            // 更新
+            $api->put('products/{product}/skus/{sku}', 'SkusController@update')
+                ->name('api.skus.update');
             // 获取skus
             $api->get('skus', 'SkusController@index')
                 ->name('api.skus.index');

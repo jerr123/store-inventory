@@ -13,14 +13,18 @@ class SkuRequest extends FormRequest
                         'product_id' => 'required|exists:products,id',
                         'bar_code' => 'required|string',
                         'unit_id' => 'required|exists:units,id',
-                        'cost_price' => 'required',
+                        // 'cost_price' => 'required',
                         'sell_price' => 'required',
                     ];
                     break;
                 case 'PATCH':
+                case 'PUT':
                     return [
-                       'bar_code' => 'string',
-                        'unit_id' => 'exists:units,id',
+                        'product_id' => 'required|exists:products,id',
+                        'bar_code' => 'required|string',
+                        'unit_id' => 'required|exists:units,id',
+                        // 'cost_price' => 'required',
+                        'sell_price' => 'required',
                     ];
                 break;
             }
@@ -35,18 +39,22 @@ class SkuRequest extends FormRequest
                         // sku
                         'bar_code' => 'required|string',
                         'unit_id' => 'required|exists:units,id',
-                        'cost_price' => 'required',
+                        // 'cost_price' => 'required',
                         'sell_price' => 'required',
                     ];
                     break;
                 case 'PATCH':
+                case 'PUT':
                     return [
-                        'name' => 'string',
+                        // spu
+                        'name' => 'required|string',
                         'img' => 'string',
                         'description' => 'string',
-
-                        'bar_code' => 'string',
-                        'unit_id' => 'exists:units,id',
+                        // sku
+                        'bar_code' => 'required|string',
+                        'unit_id' => 'required|exists:units,id',
+                        // 'cost_price' => 'required',
+                        'sell_price' => 'required',
                     ];
                 break;
             }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class ProductRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     public function rules()
     {
@@ -10,14 +10,12 @@ class ProductRequest extends FormRequest
             case 'POST':
                 return [
                     'name' => 'required|string',
-                    'img' => 'required|string',
                     'description' => 'string',
                 ];
                 break;
             case 'PATCH':
                 return [
                     'name' => 'string',
-                    'img' => 'string',
                     'description' => 'string',
                 ];
                 break;
@@ -28,7 +26,6 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => '名称',
-            'img' => '主图',
             'description' => '描述',
         ];
     }

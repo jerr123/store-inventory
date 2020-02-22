@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->string('description')->nullable()->after('img');
             $table->integer('category_id')->unsigned()->index()->after('name');
-            $table->string('hash')->index()->after('name');
+            $table->string('hash')->unique()->after('name');
         });
 
         if (!Schema::hasTable('units')) {

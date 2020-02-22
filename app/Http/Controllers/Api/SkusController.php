@@ -72,4 +72,33 @@ class SkusController extends Controller
 
         return $this->response->paginator($skus, new SkuTransformer());
     }
+
+    public function update(SkuRequest $request, Product $product, Sku $sku)
+    {
+        // if (!$product->id) {
+        //     $phash = md5($request->name . $request->category_id . $request->description);
+        //     if ($p = Product::where(['hash'=>$phash])->first()) {
+        //         $product = $p;
+        //     } else {
+        //         $product->fill($request->all());
+        //         $product->hash = $phash;
+        //         $product->save();
+        //     }
+        //     $request->offsetSet('product_id', $product->id);
+        // }
+        $phash = md5($request->name . $request->category_id . $request->description);
+        if (!$p = Product::where(['hash'=>$phash])->first()) {
+            $product->fill($request->all());
+            $product->hash = $phash;
+            $product->save();
+        }
+        $request->offsetSet('product_id', $product->id);
+        $skuHash = md5($request->bar_code . $request->unit_id . $request->product_id);
+        $sku->fill($request->all());
+        if (!$s = Sku::where(['sku_hash'=>$skuHash])->first()) {
+            $sku->sku_hash = $skuHash;
+            $sku->save();
+        }
+        return $this->response->item($sku, new SkuTransformer());
+    }
 }
