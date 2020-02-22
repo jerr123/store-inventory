@@ -13,6 +13,7 @@ class SkuTransformer extends TransformerAbstract
     {
         return [
             'id' => $sku->id,
+            'bar_code' => $sku->bar_code,
             'cost_price' => $sku->cost_price,
             'sell_price' => $sku->sell_price,
             'market_price' => $sku->market_price,

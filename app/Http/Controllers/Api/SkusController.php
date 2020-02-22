@@ -54,7 +54,18 @@ class SkusController extends Controller
         $query = $sku->withOrder($request->order, $request->order_type?:'desc');
 
         if ($categoryId = $request->category_id) {
-            $query->where('category_id', $categoryId);
+            $query = $query->whereHas('product', function($query) use($categoryId) {
+                return $query->where('category_id', $categoryId);
+            });
+        }
+
+        if ($searchKey = $request->searchKey) {
+            $query = $query->whereHas('product', function($query) use($searchKey) {
+                return $query->where('name', 'like', '%'.$searchKey.'%');
+            });
+        }
+        if ($searchKey = $request->searchKey) {
+            $query = $query->orWhere('bar_code', $searchKey);
         }
 
         $skus = $query->paginate($request->pageSize?:20);
