@@ -91,6 +91,13 @@ class SkusController extends Controller
             $product->fill($request->all());
             $product->hash = $phash;
             $product->save();
+        } else {
+            if ($p->id !== $product->id) {
+                return $this->response->error('已经存在该spu', 400);
+            } else {
+                $product->fill($request->all());
+                $product->save();
+            }
         }
         $request->offsetSet('product_id', $product->id);
         $skuHash = md5($request->bar_code . $request->unit_id . $request->product_id);

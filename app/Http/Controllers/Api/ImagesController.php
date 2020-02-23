@@ -15,7 +15,7 @@ class ImagesController extends Controller
         $user = $this->user();
 
         $size = 1024;
-        $result = $uploader->save($request->image, 'pruducts', $user->id, $size);
+        $result = $uploader->save($request->image, 'pruducts', $user->id);
         $image = new Image();
         $image->path = $result['path'];
         $image->user_id = $user->id;
