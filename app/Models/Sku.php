@@ -31,8 +31,7 @@ class Sku extends Model
                 $query->orderBy('created_at', $order_type);
                 break;
         }
-        // 预加载防止 N+1 问题
-        return $query->with('product', 'unit');
+        return $query->with('product.category', 'unit');
     }
 
 }
