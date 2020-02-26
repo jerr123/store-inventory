@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Msgboard;
 use App\Models\Msgboard\Message;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Msgboard\MessageRequest;
-use App\Transformers\Msgboard\messageTransformer;
+use App\Transformers\Msgboard\MessageTransformer;
 
 class MessagesController extends \App\Http\Controllers\Api\Controller
 {
