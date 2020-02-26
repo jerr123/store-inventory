@@ -26,12 +26,11 @@ class MessagesController extends \App\Http\Controllers\Api\Controller
                     $message->year = $ykey;
                     array_push($yearArr, $ykey);
                 }
-
-                if (!in_array($mdkey, $monthDayArr)) {
-                    $mdkey = date("Y-m-d", strtotime($message->updated_at));
-                    $message->monthDay = $monthDay;
-                    array_push($monthDayArr, $mdkey);
-                }
+            }
+            if (!in_array($mdkey, $monthDayArr)) {
+                $mdkey = date("Y-m-d", strtotime($message->updated_at));
+                $message->monthDay = $monthDay;
+                array_push($monthDayArr, $mdkey);
             }
             $message->time = date("H:i", strtotime($message->updated_at));
         }
