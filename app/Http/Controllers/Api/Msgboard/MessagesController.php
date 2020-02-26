@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Msgboard;
 
+use Carbon\Carbon;
 use App\Models\Msgboard\Message;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Msgboard\MessageRequest;
@@ -28,11 +29,20 @@ class MessagesController extends \App\Http\Controllers\Api\Controller
                 }
             }
             if (!in_array($mdkey, $monthDayArr)) {
+                if (Carbon::now() <= Carbon::parse($message->updated_at)->addDays(15)) {
+                    $monthDay =  Carbon::parse($message->updated_at)->diffForHumans();
+                }
                 $mdkey = date("Y-m-d", strtotime($message->updated_at));
+                if (Carbon::now() <= Carbon::parse($message->updated_at)->addHours(24)) {
+                    $monthDay =  '今天';
+                }
                 $message->monthDay = $monthDay;
                 array_push($monthDayArr, $mdkey);
             }
             $message->time = date("H:i", strtotime($message->updated_at));
+            if (Carbon::now() <= Carbon::parse($message->updated_at)->addHours(24)) {
+                $message->time =  Carbon::parse($message->updated_at)->diffForHumans();
+            }
         }
 
         return $this->response->paginator($messages, new MessageTransformer());
