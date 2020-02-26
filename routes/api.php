@@ -35,6 +35,16 @@ $api->version('v1', [
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
 
+            // Msgboard 小程序登录
+        $api->post('msgboard/weapp/authorizations', 'Msgboard\AuthorizationsController@weappStore')
+            ->name('api.msgboard.weapp.authorizations.store');
+        // 刷新token
+        $api->put('msgboard/authorizations/current', 'Msgboard\AuthorizationsController@update')
+            ->name('api.msgboard.authorizations.update');
+        // 删除token
+        $api->delete('msgboard/authorizations/current', 'Msgboard\AuthorizationsController@destroy')
+            ->name('api.msgboard.authorizations.destroy');
+
 
     });
 
@@ -43,8 +53,18 @@ $api->version('v1', [
         'limit' => config('api.rate_limits.access.limit'),
         'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
+
+        $api->group(['middleware' => ['guard:boardmsg_api','api.auth']], function($api) {
+            //Msgboard
+            $api->get('msgboard/current-user', 'Msgboard\UsersController@me')
+                ->name('api.msgboard.user.show');
+            $api->get('msgboard/messages', 'Msgboard\MessagesController@index')
+                ->name('api.msgboard.messages.index');
+            $api->post('msgboard/messages', 'Msgboard\MessagesController@store')
+                ->name('api.msgboard.messages.store');
+        });
         // 需要 token 的的接口
-        $api->group(['middleware' => 'api.auth'], function($api) {
+        $api->group(['middleware' => ['guard:api','api.auth']], function($api) {
             // 当前登录用户信息
             $api->get('current-user', 'UsersController@me')
             ->name('api.user.show');

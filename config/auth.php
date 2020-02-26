@@ -45,6 +45,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'boardmsg_api' => [
+            'driver' => 'jwt',
+            'provider' => 'msgboard_users'
+        ]
     ],
 
     /*
@@ -68,6 +72,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'msgboard_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\MsgBoard\User::class,
         ],
 
         // 'users' => [

@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Msgboard\Providers\AppServiceProvider::class,
+        // Msgboard\Providers\RouteServiceProvider::class,
+
     ],
 
     /*
