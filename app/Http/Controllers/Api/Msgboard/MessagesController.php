@@ -36,7 +36,7 @@ class MessagesController extends \App\Http\Controllers\Api\Controller
                 if (date("Y-m-d") == $mdkey ) {
                     $monthDay =  '今天';
                 }
-                if (date("Y-m-d", "-1 day") == $mdkey ) {
+                if (date("Y-m-d", strtotime("-1 day")) == $mdkey ) {
                     $monthDay =  '昨天';
                 }
                 $message->monthDay = $monthDay;
