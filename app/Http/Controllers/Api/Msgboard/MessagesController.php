@@ -33,7 +33,7 @@ class MessagesController extends \App\Http\Controllers\Api\Controller
                     $monthDay =  Carbon::parse($message->created_at)->diffForHumans();
                 }
                 $mdkey = date("Y-m-d", strtotime($message->created_at));
-                if (Carbon::now() <= Carbon::parse($message->created_at)->addHours(24)) {
+                if (date("Y-m-d") == $mdkey ) {
                     $monthDay =  '今天';
                 }
                 $message->monthDay = $monthDay;
