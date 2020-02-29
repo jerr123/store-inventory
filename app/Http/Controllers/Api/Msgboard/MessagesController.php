@@ -12,36 +12,36 @@ class MessagesController extends \App\Http\Controllers\Api\Controller
 {
     public function index(Request $request)
     {
-        $messages = Message::with('user')->orderBy('updated_at', 'desc')->paginate($request->pageSize?:10);
+        $messages = Message::with('user')->orderBy('created_at', 'desc')->paginate($request->pageSize?:10);
 
         $yearArr = [];
         $monthDayArr = [];
 
         foreach ($messages as $message) {
-            $ykey = date("Y", strtotime($message->updated_at));
-            $mdkey = date("Y-m-d", strtotime($message->updated_at));
-            $monthDay = date("m-d", strtotime($message->updated_at));
+            $ykey = date("Y", strtotime($message->created_at));
+            $mdkey = date("Y-m-d", strtotime($message->created_at));
+            $monthDay = date("m-d", strtotime($message->created_at));
             if ($ykey != date("Y")) {
                 if (!in_array($ykey, $yearArr)) {
-                    $ykey = date("Y", strtotime($message->updated_at));
+                    $ykey = date("Y", strtotime($message->created_at));
                     $message->year = $ykey;
                     array_push($yearArr, $ykey);
                 }
             }
             if (!in_array($mdkey, $monthDayArr)) {
-                if (Carbon::now() <= Carbon::parse($message->updated_at)->addDays(15)) {
-                    $monthDay =  Carbon::parse($message->updated_at)->diffForHumans();
+                if (Carbon::now() <= Carbon::parse($message->created_at)->addDays(15)) {
+                    $monthDay =  Carbon::parse($message->created_at)->diffForHumans();
                 }
-                $mdkey = date("Y-m-d", strtotime($message->updated_at));
-                if (Carbon::now() <= Carbon::parse($message->updated_at)->addHours(24)) {
+                $mdkey = date("Y-m-d", strtotime($message->created_at));
+                if (Carbon::now() <= Carbon::parse($message->created_at)->addHours(24)) {
                     $monthDay =  '今天';
                 }
                 $message->monthDay = $monthDay;
                 array_push($monthDayArr, $mdkey);
             }
-            $message->time = date("H:i", strtotime($message->updated_at));
-            if (Carbon::now() <= Carbon::parse($message->updated_at)->addHours(24)) {
-                $message->time =  Carbon::parse($message->updated_at)->diffForHumans();
+            $message->time = date("H:i", strtotime($message->created_at));
+            if (Carbon::now() <= Carbon::parse($message->created_at)->addHours(24)) {
+                $message->time =  Carbon::parse($message->created_at)->diffForHumans();
             }
         }
 
