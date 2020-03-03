@@ -56,6 +56,7 @@ $api->version('v1', [
 
         $api->group(['middleware' => ['guard:boardmsg_api','api.auth']], function($api) {
             //Msgboard
+            $api->post('msgboard/user-logs', 'Msgboard\UserLogsController@store');
             $api->get('msgboard/current-user', 'Msgboard\UsersController@me')
                 ->name('api.msgboard.user.show');
             $api->get('msgboard/messages', 'Msgboard\MessagesController@index')
